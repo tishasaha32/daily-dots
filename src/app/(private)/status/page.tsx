@@ -1,10 +1,11 @@
 import React from 'react'
+import { StatusWrapper } from './components'
 import ProtectedRoute from '@/components/app/protectedRoute'
 
 const StatusPage = () => {
     return (
         <ProtectedRoute>
-            <div>StatusPage</div>
+            <StatusWrapper />
         </ProtectedRoute>
     )
 }

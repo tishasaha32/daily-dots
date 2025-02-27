@@ -14,7 +14,7 @@ export const journals: Journal[] = [
     title: "Deadline Madness",
     description:
       "Work was intense today. Multiple deadlines, but managed to complete most tasks.",
-    date: new Date("2025-02-25"),
+    date: new Date("2025-02-13"),
     category: "Work",
     mood: "😖",
     imageUrl: "https://source.unsplash.com/featured/?work",
@@ -24,7 +24,7 @@ export const journals: Journal[] = [
     title: "Family Movie Night",
     description:
       "Watched an old classic with my family. Laughed a lot and had great snacks!",
-    date: new Date("2025-02-24"),
+    date: new Date("2025-02-05"),
     category: "Family",
     mood: "😍",
     imageUrl: "https://source.unsplash.com/featured/?family",
@@ -34,7 +34,7 @@ export const journals: Journal[] = [
     title: "Intense Gym Session",
     description:
       "Pushed myself today! Achieved a new personal best in weightlifting.",
-    date: new Date("2025-02-23"),
+    date: new Date("2025-02-08"),
     category: "Health",
     mood: "😎",
     imageUrl: "https://source.unsplash.com/featured/?gym",
@@ -44,7 +44,7 @@ export const journals: Journal[] = [
     title: "Unexpected Fever",
     description:
       "Felt weak all day. Had to rest and drink lots of fluids. Hope I recover soon.",
-    date: new Date("2025-02-22"),
+    date: new Date("2025-02-23"),
     category: "Health",
     mood: "🤧",
     imageUrl: "https://source.unsplash.com/featured/?sick",
@@ -54,7 +54,7 @@ export const journals: Journal[] = [
     title: "Tech Conference",
     description:
       "Attended a virtual conference on AI trends. Learned a lot of new things!",
-    date: new Date("2025-02-21"),
+    date: new Date("2025-02-20"),
     category: "Events",
     mood: "😀",
     imageUrl: "https://source.unsplash.com/featured/?conference",
@@ -64,7 +64,7 @@ export const journals: Journal[] = [
     title: "Work Presentation",
     description:
       "Nailed my presentation today! Got great feedback from the team.",
-    date: new Date("2025-02-20"),
+    date: new Date("2025-02-01"),
     category: "Work",
     mood: "😎",
     imageUrl: "https://source.unsplash.com/featured/?presentation",
@@ -74,28 +74,28 @@ export const journals: Journal[] = [
     title: "Burnt My Dinner",
     description:
       "Tried cooking a new recipe, but ended up burning it. Kitchen was a mess!",
-    date: new Date("2025-02-19"),
+    date: new Date("2025-01-31"),
     category: "Personal",
     mood: "😡",
     imageUrl: "https://source.unsplash.com/featured/?cooking",
   },
   {
     uuid: "9",
+    title: "Missed a Flight",
+    description:
+      "A stressful day! Reached the airport late and missed my flight.",
+    date: new Date("2025-02-15"),
+    category: "Personal",
+    mood: "😭",
+    imageUrl: "https://source.unsplash.com/featured/?airport",
+  },
+  {
+    uuid: "10",
     title: "Surprise Birthday Party",
     description: "Got surprised by my friends! Such a heartwarming moment.",
     date: new Date("2025-02-18"),
     category: "Events",
-    mood: "😍",
+    mood: "😱",
     imageUrl: "https://source.unsplash.com/featured/?birthday",
-  },
-  {
-    uuid: "10",
-    title: "Missed a Flight",
-    description:
-      "A stressful day! Reached the airport late and missed my flight.",
-    date: new Date("2025-02-17"),
-    category: "Personal",
-    mood: "😭",
-    imageUrl: "https://source.unsplash.com/featured/?airport",
   },
 ];
