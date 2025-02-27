@@ -1,9 +1,12 @@
 import React from 'react'
+import ProtectedRoute from '@/components/app/protectedRoute'
 
 const HomePage = () => {
 
     return (
-        <div>HomePage</div>
+        <ProtectedRoute>
+            <div>HomePage</div>
+        </ProtectedRoute>
     )
 }
 

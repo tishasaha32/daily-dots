@@ -1,8 +1,11 @@
 import React from 'react'
+import ProtectedRoute from '@/components/app/protectedRoute'
 
 const StatusPage = () => {
     return (
-        <div>StatusPage</div>
+        <ProtectedRoute>
+            <div>StatusPage</div>
+        </ProtectedRoute>
     )
 }
 
