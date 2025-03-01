@@ -14,7 +14,7 @@ const AverageMood = ({ averageMood }: AverageMoodProps) => {
     return (
         <>
             <h2 className="text-2xl font-bold pl-8">Average Mood</h2>
-            <div className="flex flex-col gap-4 px-8 py-4">
+            <div className="flex flex-col gap-4 px-8 py-4 pb-24">
                 {averageMood.map((mood) => {
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
                     return (
