@@ -1,35 +1,29 @@
-"use client"
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { Input } from '@/components/ui/input';
-import { Slider } from '@/components/ui/slider';
-import { Button } from '@/components/ui/button';
-import { Journal } from '@/schema/Journal';
-import { Calendar, Notebook } from 'lucide-react';
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { Journal } from "@/schema/Journal";
+import { Calendar, Edit } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FileInput } from '@/components/ui/file-input';
-import { DatePicker } from '@/components/ui/date-picker';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
-// import dynamic from "next/dynamic";
-// import React, { useState } from 'react'
+import { FileInput } from "@/components/ui/file-input";
+import { DatePicker } from "@/components/ui/date-picker";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Image from "next/image";
 
+type EditJournalDialogProps = {
+    openEditJournal: boolean;
+    setOpenEditJournal: (open: boolean) => void;
+    journal: Journal | null
+};
 
-type AddJournalDrawerProps = {
-    openAddJournalDrawer: boolean
-    setOpenAddJournalDrawer: React.Dispatch<React.SetStateAction<boolean>>
-}
+const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: EditJournalDialogProps) => {
 
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
-const AddJournalDrawer = ({ openAddJournalDrawer, setOpenAddJournalDrawer }: AddJournalDrawerProps) => {
-    // const [value, setValue] = useState('');
     const onOpenChange = (open: boolean) => {
-        setOpenAddJournalDrawer(open);
+        setOpenEditJournal(open);
     };
 
     const accept: { [key: string]: string[] } = {
@@ -42,12 +36,27 @@ const AddJournalDrawer = ({ openAddJournalDrawer, setOpenAddJournalDrawer }: Add
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     };
 
+    const moodMapping = [
+        { range: [0, 12.5], mood: "😭" },
+        { range: [12.6, 25], mood: "🤧" },
+        { range: [25.1, 37.5], mood: "😖" },
+        { range: [37.6, 50], mood: "😡" },
+        { range: [50.1, 62.5], mood: "😱" },
+        { range: [62.6, 75], mood: "😀" },
+        { range: [75.1, 87.5], mood: "😎" },
+        { range: [87.6, 100], mood: "😍" },
+    ];
+
+    const getMoodValue = (mood: string) => {
+        return moodMapping.find((item) => item.mood === mood)?.range[0] ?? 0;
+    };
+
     const defaultValues: z.infer<typeof Journal> = {
-        title: "",
-        description: "",
-        date: undefined,
-        category: "",
-        mood: "",
+        title: journal?.title || "",
+        description: journal?.description || "",
+        date: journal?.date || undefined,
+        category: journal?.category.toLowerCase() || "",
+        mood: getMoodValue(journal?.mood || "😀").toString() || "",
         imageUrl: [],
     };
 
@@ -61,11 +70,13 @@ const AddJournalDrawer = ({ openAddJournalDrawer, setOpenAddJournalDrawer }: Add
         console.log(values);
     };
 
-
     return (
-        <Drawer open={openAddJournalDrawer} onOpenChange={onOpenChange} >
+        <Drawer open={openEditJournal} onOpenChange={onOpenChange}>
             <DrawerContent>
-                <DrawerTitle className='pl-10 pb-4 border-b-2 flex items-center gap-2'><Notebook className='h-6 w-6' />Add Journal</DrawerTitle>
+                <DrawerTitle className='pl-4 pb-4 border-b-2 flex items-center gap-2'>
+                    <Edit />
+                    Edit Journal
+                </DrawerTitle>
                 <Form {...form}>
                     <form
                         className="flex w-full flex-col gap-5"
@@ -142,11 +153,11 @@ const AddJournalDrawer = ({ openAddJournalDrawer, setOpenAddJournalDrawer }: Add
                                 <FormField
                                     control={form.control}
                                     name="mood"
-                                    render={() => (
+                                    render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Mood<span className='text-destructive'>*</span></FormLabel>
                                             <FormControl>
-                                                <Slider />
+                                                <Slider value={Number(field.value)} onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -165,17 +176,18 @@ const AddJournalDrawer = ({ openAddJournalDrawer, setOpenAddJournalDrawer }: Add
                                         </FormItem>
                                     )}
                                 />
+                                {journal?.imageUrl && form.getValues("imageUrl") && form.getValues("imageUrl")?.length === 0 && <Image src={journal?.imageUrl} alt="Quote Background" className="rounded-3xl w-[100%] h-[100%] object-cover" width={350} height={0} objectFit="cover" />}
                             </div>
                         </ScrollArea>
                         <div className='flex justify-end items-center gap-2 pr-10 pb-10'>
-                            <Button variant={"outline"} onClick={() => setOpenAddJournalDrawer(false)}>Cancel</Button>
-                            <Button type="submit" className='bg-[#e05126]'>Submit</Button>
+                            <Button variant={"outline"} onClick={() => setOpenEditJournal(false)}>Cancel</Button>
+                            <Button type="submit" className='bg-[#e05126]'>Update</Button>
                         </div>
                     </form>
                 </Form>
             </DrawerContent>
-        </Drawer >
+        </Drawer>
     )
 }
 
-export default AddJournalDrawer
+export default EditJournalDialog

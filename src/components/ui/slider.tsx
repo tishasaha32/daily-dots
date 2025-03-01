@@ -12,15 +12,30 @@ const moodMapping = [
 ];
 
 const getMood = (value: number) => {
-  return moodMapping.find(({ range }) => value >= range[0] && value <= range[1])?.mood || "😀";
+  return (
+    moodMapping.find(({ range }) => value >= range[0] && value <= range[1])
+      ?.mood || "😀"
+  );
 };
 
-const Slider = () => {
-  const [value, setValue] = useState(0);
+type SliderProps = {
+  value?: number;
+  onChange?: (val: number) => void;
+};
+
+const Slider = ({ value: propValue, onChange }: SliderProps) => {
+  const [internalValue, setInternalValue] = useState(propValue ?? 0);
+  const value = propValue ?? internalValue;
   const mood = getMood(value);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseFloat(e.target.value);
+    setInternalValue(newValue);
+    onChange?.(newValue);
+  };
+
   return (
-    <div className="flex items-center justify-center gap-2 space-y-4 p-6 bg-background rounded-lg shadow-md w-80">
+    <div className="flex flex-col items-center gap-2 p-6 bg-background rounded-lg shadow-md w-80">
       <span className="text-4xl">{mood}</span>
       <input
         type="range"
@@ -28,7 +43,7 @@ const Slider = () => {
         max="100"
         step="0.1"
         value={value}
-        onChange={(e) => setValue(parseFloat(e.target.value))}
+        onChange={handleChange}
         className="w-full accent-blue-500"
       />
       <span className="text-lg font-medium">{value.toFixed(1)}</span>

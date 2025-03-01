@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const AddJournal = z.object({
+export const Journal = z.object({
   title: z
     .string()
     .min(1, { message: "Title is required" })
