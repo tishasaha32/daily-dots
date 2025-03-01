@@ -39,7 +39,7 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
             {openViewJournal && <ViewJournalDialog openViewJournal={openViewJournal} setOpenViewJournal={setOpenViewJournal} journal={selectedJournal} />}
             {openEditJournal && <EditJournalDialog openEditJournal={openEditJournal} setOpenEditJournal={setOpenEditJournal} journal={selectedJournal} />}
             {openDeleteJournal && <DeleteJournalDialog openDeleteJournal={openDeleteJournal} setOpenDeleteJournal={setOpenDeleteJournal} journal={selectedJournal} />}
-            <div className="lg:w-[70%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pb-28">
+            <div className="lg:w-[70%] w-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pb-28">
                 {journals?.map((journal) => {
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
                     let date;
@@ -49,7 +49,7 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
                         date = journal?.date.toISOString().split("T")[0];
                     }
                     return (
-                        <Card key={journal.uuid} style={{ backgroundColor: randomColor }}>
+                        <Card key={journal?.id} style={{ backgroundColor: randomColor }}>
                             <CardHeader className="p-0 flex flex-row justify-between pr-2">
                                 <p className="bg-card w-[20vw] lg:w-[5vw] flex items-center justify-center rounded-md text-sm font-semibold h-[4vh]">
                                     {journal?.category}

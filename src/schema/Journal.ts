@@ -18,13 +18,7 @@ export const Journal = z.object({
         message: "Invalid date format",
       }
     ),
-  category: z
-    .string()
-    .min(1, { message: "Category is required" })
-    .max(100, { message: "Category must be less than 100 characters" }),
-  mood: z
-    .string()
-    .min(1, { message: "Mood is required" })
-    .max(100, { message: "Mood must be less than 100 characters" }),
+  category: z.string().min(1, { message: "Category is required" }),
+  mood: z.number().min(0, { message: "Mood is required" }),
   imageUrl: z.array(z.instanceof(File)).optional(),
 });

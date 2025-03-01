@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Journal } from "@/schema/Journal";
-import { Calendar, Edit } from "lucide-react";
+import { Calendar, Edit, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -13,14 +13,19 @@ import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Image from "next/image";
+import { useJournalStore } from "@/store/journalStore";
+import { useState } from "react";
 
 type EditJournalDialogProps = {
     openEditJournal: boolean;
-    setOpenEditJournal: (open: boolean) => void;
+    setOpenEditJournal: React.Dispatch<React.SetStateAction<boolean>>;
     journal: Journal | null
 };
 
 const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: EditJournalDialogProps) => {
+
+    const { updateJournal } = useJournalStore((state) => state);
+    const [update, setUpdate] = useState(false);
 
     const onOpenChange = (open: boolean) => {
         setOpenEditJournal(open);
@@ -51,12 +56,19 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
         return moodMapping.find((item) => item.mood === mood)?.range[0] ?? 0;
     };
 
+    const getMood = (value: number) => {
+        return (
+            moodMapping.find(({ range }) => value >= range[0] && value <= range[1])
+                ?.mood || "😀"
+        );
+    };
+
     const defaultValues: z.infer<typeof Journal> = {
         title: journal?.title || "",
         description: journal?.description || "",
         date: journal?.date || undefined,
         category: journal?.category.toLowerCase() || "",
-        mood: getMoodValue(journal?.mood || "😀").toString() || "",
+        mood: getMoodValue(journal?.mood || "😀") || 0,
         imageUrl: [],
     };
 
@@ -68,6 +80,8 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
 
     const onSubmit = async (values: z.infer<typeof Journal>) => {
         console.log(values);
+
+        updateJournal({ values, mood: getMood(values?.mood), journal: journal as Journal, setUpdate, setOpenEditJournal });
     };
 
     return (
@@ -181,7 +195,7 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
                         </ScrollArea>
                         <div className='flex justify-end items-center gap-2 pr-10 pb-10'>
                             <Button variant={"outline"} onClick={() => setOpenEditJournal(false)}>Cancel</Button>
-                            <Button type="submit" className='bg-[#e05126]'>Update</Button>
+                            {update ? <Button type="submit" className="bg-[#e05126]"><Loader2 className="animate-spin mr-2" />Updating</Button> : <Button type="submit" className="bg-[#e05126]">Update</Button>}
                         </div>
                     </form>
                 </Form>

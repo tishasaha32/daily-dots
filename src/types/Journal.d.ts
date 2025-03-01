@@ -1,4 +1,5 @@
 type Journal = {
+  id?: string;
   uuid: string;
   title: string;
   description: string;
