@@ -55,7 +55,7 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
                                 <Card key={journal?.id} style={{ backgroundColor: randomColor }}>
                                     <CardHeader className="p-0 flex flex-row justify-between pr-2">
                                         <p className="bg-card w-[20vw] lg:w-[5vw] flex items-center justify-center rounded-md text-sm font-semibold h-[4vh]">
-                                            {journal?.category}
+                                            {journal?.category.charAt(0).toUpperCase() + journal?.category?.slice(1)}
                                         </p>
                                         <Popover>
                                             <PopoverTrigger asChild>

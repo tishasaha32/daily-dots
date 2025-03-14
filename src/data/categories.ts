@@ -5,22 +5,22 @@ export const categories: Category[] = [
   },
   {
     uuid: 2,
-    title: "Personal",
+    title: "personal",
   },
   {
     uuid: 3,
-    title: "Work",
+    title: "work",
   },
   {
     uuid: 4,
-    title: "Family",
+    title: "family",
   },
   {
     uuid: 5,
-    title: "Health",
+    title: "health",
   },
   {
     uuid: 6,
-    title: "Events",
+    title: "events",
   },
 ];

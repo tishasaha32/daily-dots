@@ -12,12 +12,12 @@ const Categories = ({ selectedCategory, setSelectedCategory, categories }: Categ
             <div className="flex gap-2 items-center w-full max-w-lg overflow-scroll py-4 px-2 scrollbar-hide">
                 {categories?.map((category) => (
                     <div
-                        key={category.uuid}
+                        key={category?.uuid}
                         className={`px-3 py-1 border border-border rounded-full bg-card font-bold cursor-pointer 
-                            ${selectedCategory === category.title ? "text-black bg-secondary" : "text-secondary"}`}
-                        onClick={() => setSelectedCategory(category.title)}
+                            ${selectedCategory === category?.title ? "text-black bg-secondary" : "text-secondary"}`}
+                        onClick={() => setSelectedCategory(category?.title)}
                     >
-                        {category.title}
+                        {category?.title.charAt(0).toUpperCase() + category?.title?.slice(1)}
                     </div>
                 ))}
             </div>
