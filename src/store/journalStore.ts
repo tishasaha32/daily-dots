@@ -79,7 +79,7 @@ export const useJournalStore = create<JournalState>((set) => ({
             | "Family"
             | "Health"
             | "Events",
-          date: data?.dueDate ? new Date(data?.dueDate.toDate()) : new Date(),
+          date: data?.date ? new Date(data?.date.toDate()) : new Date(),
           mood: data?.mood as
             | "😀"
             | "😍"
@@ -109,11 +109,10 @@ export const useJournalStore = create<JournalState>((set) => ({
     setOpenAddJournalDrawer,
   }) => {
     setCreating(true);
-    let imageUrl = ""; // Default empty URL
+    let imageUrl = "";
 
     if (values?.imageUrl && values?.imageUrl.length > 0) {
       try {
-        // Store file to Cloudinary
         const data = new FormData();
         data.append("file", values.imageUrl[0]);
         data.append("upload_preset", "daily-dots");
@@ -142,7 +141,12 @@ export const useJournalStore = create<JournalState>((set) => ({
 
     try {
       // Store journal to Firestore
-      const payload = { ...values, mood, imageUrl, userUid: user };
+      const payload = {
+        ...values,
+        mood,
+        imageUrl,
+        userUid: user,
+      };
       const docRef = await addDoc(collection(db, "journals"), payload);
       if (docRef.id) {
         set((state) => ({

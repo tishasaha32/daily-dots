@@ -1,53 +1,33 @@
 "use client";
 import { z } from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Journal } from "@/schema/Journal";
+import { auth } from "@/app/firebase/config";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { Calendar, Loader2, Notebook } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileInput } from "@/components/ui/file-input";
 import { useJournalStore } from "@/store/journalStore";
 import { DatePicker } from "@/components/ui/date-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
-import { useState } from "react";
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
-// import dynamic from "next/dynamic";
-// import React, { useState } from 'react'
+import { Calendar, Loader2, Notebook } from "lucide-react";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type AddJournalDrawerProps = {
     openAddJournalDrawer: boolean;
     setOpenAddJournalDrawer: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
 const AddJournalDrawer = ({
     openAddJournalDrawer,
     setOpenAddJournalDrawer,
 }: AddJournalDrawerProps) => {
-    // const [value, setValue] = useState('');
 
     const { addJournal } = useJournalStore((state) => state);
     const [user] = useAuthState(auth);
@@ -152,8 +132,7 @@ const AddJournalDrawer = ({
                                                 Description<span className="text-destructive">*</span>
                                             </FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter the description" {...field} />
-                                                {/* <ReactQuill theme="snow" value={value} onChange={setValue} /> */}
+                                                <Textarea placeholder="Enter the description" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -193,11 +172,11 @@ const AddJournalDrawer = ({
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
-                                                            <SelectItem value="Personal">Personal</SelectItem>
-                                                            <SelectItem value="Work">Work</SelectItem>
-                                                            <SelectItem value="Family">Family</SelectItem>
-                                                            <SelectItem value="Health">Health</SelectItem>
-                                                            <SelectItem value="Events">Events</SelectItem>
+                                                            <SelectItem value="personal">Personal</SelectItem>
+                                                            <SelectItem value="work">Work</SelectItem>
+                                                            <SelectItem value="family">Family</SelectItem>
+                                                            <SelectItem value="health">Health</SelectItem>
+                                                            <SelectItem value="events">Events</SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>

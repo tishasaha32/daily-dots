@@ -6,6 +6,7 @@ import { Journal } from "@/schema/Journal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileInput } from "@/components/ui/file-input";
 import { useJournalStore } from "@/store/journalStore";
@@ -122,8 +123,7 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
                                         <FormItem>
                                             <FormLabel>Description<span className='text-destructive'>*</span></FormLabel>
                                             <FormControl>
-                                                <Input placeholder='Enter the description' {...field} />
-                                                {/* <ReactQuill theme="snow" value={value} onChange={setValue} /> */}
+                                                <Textarea placeholder='Enter the description' {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

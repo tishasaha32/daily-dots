@@ -1,6 +1,5 @@
 import NoJournal from "@/components/app/noJournal";
 import { Progress } from "@/components/ui/progress";
-import React from "react";
 
 type AverageMoodProps = {
     averageMood: {

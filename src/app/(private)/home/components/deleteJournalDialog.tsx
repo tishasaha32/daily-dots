@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
-import { useJournalStore } from "@/store/journalStore";
-import { Trash } from "lucide-react";
 import { useState } from "react";
+import { Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useJournalStore } from "@/store/journalStore";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 
 type DeleteJournalDialogProps = {
     openDeleteJournal: boolean

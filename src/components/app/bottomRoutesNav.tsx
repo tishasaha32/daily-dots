@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
+import Link from 'next/link';
 import { usePathname } from "next/navigation";
 import { Calendar, Home, User } from "lucide-react";
-import Link from 'next/link';
 
 const BottomRoutesNav = () => {
     const pathname = usePathname();

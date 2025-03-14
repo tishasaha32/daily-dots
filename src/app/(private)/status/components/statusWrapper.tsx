@@ -1,10 +1,10 @@
 "use client";
+import { useEffect } from "react";
 import AverageMood from "./averageMood"
 import { auth } from "@/app/firebase/config";
 import CalendarSection from "./calendarSection"
 import { useJournalStore } from "@/store/journalStore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect } from "react";
 
 const StatusWrapper = () => {
     const [user] = useAuthState(auth)

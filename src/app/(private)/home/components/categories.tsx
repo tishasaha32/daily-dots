@@ -1,5 +1,3 @@
-import React from "react";
-
 type CategoriesProps = {
     selectedCategory: string;
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
