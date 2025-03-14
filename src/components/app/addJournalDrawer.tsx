@@ -245,16 +245,16 @@ const AddJournalDrawer = ({
                                 Cancel
                             </Button>
 
-                            {creating ? (
-                                <Button className="flex items-center bg-[#e05126]" type="submit">
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Submitting...
-                                </Button>
-                            ) : (
-                                <Button className="flex items-center bg-[#e05126]" type="submit">
-                                    Submit
-                                </Button>
-                            )}
+                            <Button className="bg-[#e05126]" type="submit">
+                                {creating ? (
+                                    <div className="flex items-center gap-2">
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Submitting...
+                                    </div>
+                                ) : (
+                                    "Submit"
+                                )}
+                            </Button>
                         </div>
                     </form>
                 </Form>

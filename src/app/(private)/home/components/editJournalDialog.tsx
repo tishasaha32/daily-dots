@@ -1,20 +1,20 @@
 import { z } from "zod";
+import Image from "next/image";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Journal } from "@/schema/Journal";
-import { Calendar, Edit, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileInput } from "@/components/ui/file-input";
+import { useJournalStore } from "@/store/journalStore";
+import { Calendar, Edit, Loader2 } from "lucide-react";
 import { DatePicker } from "@/components/ui/date-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Image from "next/image";
-import { useJournalStore } from "@/store/journalStore";
-import { useState } from "react";
 
 type EditJournalDialogProps = {
     openEditJournal: boolean;
@@ -145,7 +145,7 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
                                         <FormItem>
                                             <FormLabel>Category<span className='text-destructive'>*</span></FormLabel>
                                             <FormControl>
-                                                <Select {...field}>
+                                                <Select {...field} onValueChange={field.onChange}>
                                                     <SelectTrigger>
                                                         <SelectValue placeholder="Select a category" />
                                                     </SelectTrigger>

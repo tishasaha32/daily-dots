@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
+import { useJournalStore } from "@/store/journalStore";
 import { Trash } from "lucide-react";
+import { useState } from "react";
 
 type DeleteJournalDialogProps = {
     openDeleteJournal: boolean
@@ -10,11 +12,15 @@ type DeleteJournalDialogProps = {
 
 const DeleteJournalDialog = ({ openDeleteJournal, setOpenDeleteJournal, journal }: DeleteJournalDialogProps) => {
 
+    const [deleteJournalState, setDeleteJournalState] = useState(false)
+    const { deleteJournal } = useJournalStore()
     const onOpenChange = (open: boolean) => {
         setOpenDeleteJournal(open);
     };
 
-    console.log(journal);
+    const handleDeleteJournal = () => {
+        deleteJournal({ journalId: journal?.id as string, setOpenDialog: setOpenDeleteJournal, setDeleteJournalState })
+    }
 
     return (
         <Drawer open={openDeleteJournal} onOpenChange={onOpenChange}>
@@ -27,7 +33,9 @@ const DeleteJournalDialog = ({ openDeleteJournal, setOpenDeleteJournal, journal 
                     <p>Are you sure you want to delete this journal?</p>
                     <div className="flex justify-end gap-2 mt-4">
                         <Button variant={"outline"} onClick={() => setOpenDeleteJournal(false)}>Cancel</Button>
-                        <Button variant={"destructive"}>Delete</Button>
+                        <Button variant={"destructive"} onClick={() => handleDeleteJournal()}>
+                            {deleteJournalState ? "Deleting..." : "Delete"}
+                        </Button>
                     </div>
                 </div>
             </DrawerContent>

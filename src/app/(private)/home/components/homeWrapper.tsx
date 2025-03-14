@@ -1,13 +1,12 @@
 "use client"
 import Quote from './quote'
-import { useEffect, useState } from 'react'
 import Categories from './categories'
 import JournalCards from './journalCards'
+import { useEffect, useState } from 'react'
+import { auth } from '@/app/firebase/config'
 import { categories, quotes } from "@/data";
 import { useJournalStore } from '@/store/journalStore'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/app/firebase/config'
-// import NoJournals from './noJournals'
 
 const HomeWrapper = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -17,7 +16,7 @@ const HomeWrapper = () => {
 
     useEffect(() => {
         getJournals({ user });
-    }, []);
+    }, [user, getJournals]);
 
     const filteredJournals = journals.filter((journal) => journal.category === selectedCategory);
     return (
