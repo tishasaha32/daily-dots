@@ -79,9 +79,13 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
     });
 
     const onSubmit = async (values: z.infer<typeof Journal>) => {
-        console.log(values);
-
-        updateJournal({ values, mood: getMood(values?.mood), journal: journal as Journal, setUpdate, setOpenEditJournal });
+        updateJournal({
+            values,
+            mood: getMood(values.mood), // Pass mood separately
+            journal: journal as Journal,
+            setUpdate,
+            setOpenEditJournal
+        });
     };
 
     return (
@@ -195,7 +199,16 @@ const EditJournalDialog = ({ openEditJournal, setOpenEditJournal, journal }: Edi
                         </ScrollArea>
                         <div className='flex justify-end items-center gap-2 pr-10 pb-10'>
                             <Button variant={"outline"} onClick={() => setOpenEditJournal(false)}>Cancel</Button>
-                            {update ? <Button type="submit" className="bg-[#e05126]"><Loader2 className="animate-spin mr-2" />Updating</Button> : <Button type="submit" className="bg-[#e05126]">Update</Button>}
+                            {update ? (
+                                <Button className="flex items-center gap-2 bg-[#e05126] text-white hover:bg-[#d14421]">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Updating...
+                                </Button>
+                            ) : (
+                                <Button className="bg-[#e05126] hover:bg-[#d14421]" type="submit">
+                                    Update
+                                </Button>
+                            )}
                         </div>
                     </form>
                 </Form>

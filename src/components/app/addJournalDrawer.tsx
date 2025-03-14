@@ -105,7 +105,6 @@ const AddJournalDrawer = ({
     });
 
     const onSubmit = async (values: z.infer<typeof Journal>) => {
-        console.log(values);
         addJournal({
             values,
             mood: getMood(values?.mood),
@@ -245,16 +244,19 @@ const AddJournalDrawer = ({
                                 Cancel
                             </Button>
 
-                            <Button className="bg-[#e05126]" type="submit">
-                                {creating ? (
-                                    <div className="flex items-center gap-2">
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Submitting...
-                                    </div>
-                                ) : (
-                                    "Submit"
-                                )}
-                            </Button>
+                            {/* <Button className="bg-[#e05126]" type="submit"> */}
+                            {creating ? (
+                                <Button className="flex items-center gap-2 bg-[#e05126] text-white hover:bg-[#d14421]">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Submitting...
+                                </Button>
+                            ) : (
+                                <Button className="bg-[#e05126] hover:bg-[#d14421]" type="submit">
+                                    Submit
+                                </Button>
+                            )}
+
+                            {/* </Button> */}
                         </div>
                     </form>
                 </Form>

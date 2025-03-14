@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
+import NoJournal from "@/components/app/noJournal";
 import ViewJournalDialog from "./viewJournalDialog";
 import EditJournalDialog from "./editJournalDialog";
 import DeleteJournalDialog from "./deleteJournalDialog";
 import { Ellipsis, Eye, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import NoJournals from "./noJournals";
 
 type JournalCardsProps = {
     journals: Journal[];
@@ -51,7 +51,7 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
                             date = journal?.date.toISOString().split("T")[0];
                         }
                         return (
-                            <>
+                            <React.Fragment key={journal?.id}>
                                 <Card key={journal?.id} style={{ backgroundColor: randomColor }}>
                                     <CardHeader className="p-0 flex flex-row justify-between pr-2">
                                         <p className="bg-card w-[20vw] lg:w-[5vw] flex items-center justify-center rounded-md text-sm font-semibold h-[4vh]">
@@ -78,12 +78,12 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
                                     </CardFooter>
                                 </Card>
 
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </div>
             </div>
-            {journals?.length === 0 && <NoJournals />}
+            {journals?.length === 0 && <NoJournal text="No Journal Found" />}
         </>
     );
 };

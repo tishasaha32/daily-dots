@@ -1,3 +1,4 @@
+import NoJournal from "@/components/app/noJournal";
 import { Progress } from "@/components/ui/progress";
 import React from "react";
 
@@ -27,6 +28,7 @@ const AverageMood = ({ averageMood }: AverageMoodProps) => {
                     )
                 })}
             </div>
+            {averageMood.length === 0 && <NoJournal text="No Journal Added" />}
         </>
     );
 };

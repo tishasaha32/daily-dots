@@ -1,8 +1,19 @@
-import { journals } from "@/data"
+"use client";
 import AverageMood from "./averageMood"
+import { auth } from "@/app/firebase/config";
 import CalendarSection from "./calendarSection"
+import { useJournalStore } from "@/store/journalStore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
 
 const StatusWrapper = () => {
+    const [user] = useAuthState(auth)
+    const { journals, getJournals } = useJournalStore((state) => state);
+
+    useEffect(() => {
+        getJournals({ user });
+    }, [user, getJournals]);
+
     const calculateMoodPercentage = () => {
         const totalEntries = journals.length;
         const moodCounts: Record<string, number> = {};

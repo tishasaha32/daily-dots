@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "@/components/app/navBar";
-import BottomRoutesNav from "@/components/app/bottomRoutesNav";
 import PlusButton from "@/components/app/plusButton";
+import BottomRoutesNav from "@/components/app/bottomRoutesNav";
 
 export default function PrivateLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
