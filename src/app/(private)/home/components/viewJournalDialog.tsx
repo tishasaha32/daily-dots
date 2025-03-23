@@ -15,7 +15,7 @@ const ViewJournalDialog = ({ openViewJournal, setOpenViewJournal, journal }: Vie
     const onOpenChange = (open: boolean) => {
         setOpenViewJournal(open);
     };
-
+    console.log(journal, "***")
     return (
         <Drawer open={openViewJournal} onOpenChange={onOpenChange}>
             <DrawerContent>
@@ -31,10 +31,9 @@ const ViewJournalDialog = ({ openViewJournal, setOpenViewJournal, journal }: Vie
                         <Image
                             src={journal?.imageUrl}
                             alt="Quote Background"
-                            className="rounded-3xl w-[100%] h-[100%] object-cover"
+                            className="rounded-3xl w-[100%] h-[100%] object-contain"
                             width={350}
                             height={0}
-                            objectFit="cover"
                         />
                     </div>
                 }

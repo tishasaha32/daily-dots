@@ -140,9 +140,15 @@ export const useJournalStore = create<JournalState>((set) => ({
     }
 
     try {
+      // Convert date to IST before storing
+      const gmtDate = values?.date ? new Date(values.date) : new Date();
+      const istOffset = 5.5 * 60 * 60 * 1000; // Offset in milliseconds
+      const istDate = new Date(gmtDate.getTime() + istOffset);
+
       // Store journal to Firestore
       const payload = {
         ...values,
+        date: istDate, // Save date in IST
         mood,
         imageUrl,
         userUid: user,
@@ -177,6 +183,7 @@ export const useJournalStore = create<JournalState>((set) => ({
     }
 
     const journalRef = doc(db, "journals", journal.id);
+    let uploadImage = journal.imageUrl || ""; // Default to existing image URL
 
     if (values?.imageUrl && values?.imageUrl.length > 0) {
       // Store file to Cloudinary
@@ -185,30 +192,47 @@ export const useJournalStore = create<JournalState>((set) => ({
       data.append("upload_preset", "daily-dots");
       data.append("cloud_name", "dlatzxjdp");
 
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dlatzxjdp/image/upload",
-        { method: "POST", body: data }
-      );
-      const uploadImage = await res.json();
+      try {
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dlatzxjdp/image/upload",
+          { method: "POST", body: data }
+        );
 
-      // Update journal in Firestore
-      const updatedJournal = { ...values, mood, imageUrl: uploadImage.url };
-      await updateDoc(journalRef, updatedJournal);
-    } else {
-      const updatedJournal = {
-        ...values,
-        mood: mood,
-        imageUrl: journal.imageUrl || "",
-      };
-      await updateDoc(journalRef, updatedJournal);
+        if (!res.ok) {
+          throw new Error(`Cloudinary upload failed: ${res.statusText}`);
+        }
+
+        const response = await res.json();
+        uploadImage = response?.url || uploadImage; // Use new image if available
+      } catch (error) {
+        console.error("Error uploading to Cloudinary:", error);
+      }
     }
 
-    // Update state
-    set((state) => ({
-      journals: state.journals.map((t) =>
-        t.id === journal.id ? { ...t, ...values } : t
-      ),
-    }));
+    try {
+      // Convert date to IST before updating
+      const gmtDate = values?.date ? new Date(values.date) : new Date();
+      const istOffset = 5.5 * 60 * 60 * 1000; // Offset in milliseconds
+      const istDate = new Date(gmtDate.getTime() + istOffset);
+
+      // Update journal in Firestore
+      const updatedJournal = {
+        ...values,
+        date: istDate, // Store date in IST
+        mood,
+        imageUrl: uploadImage,
+      };
+      await updateDoc(journalRef, updatedJournal);
+
+      // Update state
+      set((state) => ({
+        journals: state.journals.map((t) =>
+          t.id === journal.id ? { ...t, ...updatedJournal } : t
+        ),
+      }));
+    } catch (error) {
+      console.error("Error updating journal in Firestore:", error);
+    }
 
     setUpdate(false);
     setOpenEditJournal(false);

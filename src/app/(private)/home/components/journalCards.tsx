@@ -34,6 +34,7 @@ const JournalCards = ({ journals }: JournalCardsProps) => {
         setOpenDeleteJournal(true);
         setSelectedJournal(journal);
     }
+    // console.log(journals[0])
 
     return (
         <>
