@@ -15,6 +15,7 @@ interface JournalState {
   journals: Journal[];
   loading: boolean;
   error: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getJournals: ({ user }: { user: any }) => void;
   addJournal: ({
     values,
@@ -23,8 +24,10 @@ interface JournalState {
     setCreating,
     setOpenAddJournalDrawer,
   }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     values: any;
     mood: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     user: any;
     setCreating: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenAddJournalDrawer: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,6 +42,7 @@ interface JournalState {
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     journal: Journal;
     mood: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     values: any;
     setOpenEditJournal: React.Dispatch<React.SetStateAction<boolean>>;
   }) => void;
